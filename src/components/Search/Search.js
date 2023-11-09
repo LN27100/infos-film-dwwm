@@ -2,16 +2,17 @@ import './Search.css';
 import { useNavigate } from 'react-router';
 
 function Search() {
-   
+
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {	
-  	const form = e.target 
-  	const formData = new FormData(form) 
-  	console.log(formData) 
-  	console.log(formData.get('search')) /* correspond au name de l’input */
-  	navigate(`/List/${formData.get('search')}`)  /* exemple /List/Titanic */
-  }
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Empêche la soumission par défaut
+        const form = e.target
+        const formData = new FormData(form)
+        console.log(formData)
+        console.log(formData.get('search')) /* correspond au name de l’input */
+        navigate(`/List/${formData.get('search')}`)  /* exemple /List/Titanic */
+    }
 
 
     return (
