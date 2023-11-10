@@ -2,45 +2,27 @@ import { useParams } from 'react-router-dom';
 import './List.css';
 import { useState, useEffect } from 'react'
 import { getFilmsFromTMdbWithText } from '../TMDBApi.js';
-
-
-function Film({ poster, abstract }) {
-  return (
-    <div>
-      <img src={poster} alt="Film Poster" />
-      <p>{abstract}</p>
-    </div>
-  );
-}
+import Film from './Film';  // Assurez-vous d'importer la bonne version de Film
 
 function List() {
-
-  const [films, setFilms] = useState([])
-
-  const search = useParams()  /* récupération des paramètres de l’url */
-  /* la variable search est un objet */
+  const [films, setFilms] = useState([]);
+  const search = useParams();
 
   useEffect(() => {
     getFilmsFromTMdbWithText(search.data, 1)
       .then(data => { setFilms(data.results) })
-  }, []);
+  }, [search.data]);  // Assurez-vous de mettre search.data dans la dépendance du useEffect
 
   return (
-
     <div className="container">
       <h2>Liste des films</h2>
-      <p>{search.data}</p>  {/* data correspond au paramètre de la route */}
+      <p>{search.data}</p>
 
-      {films.map((film) => {
-        return (
-          <Film key={film.id} poster={film.poster_path}	abstract={film.overview} />
-
-        )
-      }
-      )}
-
+      {films.map((film) => (
+        <Film key={film.id} poster={film.poster_path} abstract={film.overview} />
+      ))}
     </div>
-
   );
 }
+
 export default List;
