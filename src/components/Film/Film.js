@@ -1,4 +1,4 @@
-import './Film.css';
+import 'src/components/Film/Film.css';
 
 function Film({ abstract, poster }) {
 
